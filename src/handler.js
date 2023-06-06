@@ -29,6 +29,22 @@ const addBookHandler = (request, h) => {
   };
 
   books.push(newBook);
+
+  const isSuccess = books.filter((book) => book.id === id).length > 0;
+
+  if (isSuccess) {
+    const response = h.response({
+      status: 'success',
+      message: 'buku berhasil ditambahkan',
+      data: {
+        bookId: id,
+      },
+    });
+    response.code(201);
+    return response;
+  }
+
+  
 };
 
 module.exports = {
