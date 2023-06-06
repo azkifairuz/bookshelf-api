@@ -83,7 +83,7 @@ const addBookHandler = (request, h) => {
   return response;
 };
 
-// get all boook
+// get all book
 const getAllBookHandler = () => {
   const bookData = books.map((book) => ({
     id: book.id,
@@ -110,12 +110,12 @@ const getAllBookHandler = () => {
   return getAll;
 };
 
-// getBookByIdHandler for detail
-const getBookbyIdHandler = (request, h) => {
+// get book by id for detail
+const getBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
   const filteredBook = books.find((book) => book.id === bookId)[0];
-
+  // response when id find
   if (filteredBook !== undefined) {
     return {
       status: 'success',
@@ -124,7 +124,7 @@ const getBookbyIdHandler = (request, h) => {
       },
     };
   }
-
+  // response when id not found
   const response = h.response({
     status: 'fail',
     message: 'Buku tidak ditemukan',
@@ -133,7 +133,8 @@ const getBookbyIdHandler = (request, h) => {
   return response;
 };
 
-const editBookHandler = (request, h) => {
+// edit book by id
+const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
   const {
@@ -201,9 +202,30 @@ const editBookHandler = (request, h) => {
   response.code(404);
   return response;
 };
+
+// delete book by id
+const deleteBookByIdHandler = (request, h) => {
+  const { bookId } = request.params;
+
+  const index = books.findIndex((book) => book.id === bookId);
+
+  // response when delete success
+  if (index !== -1) {
+    books.splice(index, 1);
+    const response = h.response({
+      status: 'success',
+      message: 'Buku berhasil dihapus',
+    });
+    response.code(200);
+    return response;
+  }
+
+};
+
 module.exports = {
   addBookHandler,
   getAllBookHandler,
-  getBookbyIdHandler,
-  editBookHandler,
+  getBookByIdHandler,
+  editBookByIdHandler,
+  deleteBookByIdHandler,
 };
