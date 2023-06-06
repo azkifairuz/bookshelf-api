@@ -220,6 +220,13 @@ const deleteBookByIdHandler = (request, h) => {
     return response;
   }
 
+  // response when id not found
+  const response = h.response({
+    status: 'fail',
+    message: 'Gagal memperbarui buku. Id tidak ditemukan',
+  });
+  response.code(404);
+  return response;
 };
 
 module.exports = {
