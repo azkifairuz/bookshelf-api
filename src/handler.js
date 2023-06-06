@@ -40,7 +40,7 @@ const addBookHandler = (request, h) => {
 
   books.push(newBook);
 
-  // response  when name = null
+  // response  when name null and undefined
   if (!name) {
     const response = h.response({
       status: 'fail',
@@ -173,11 +173,21 @@ const editBookHandler = (request, h) => {
     return response;
   }
 
-  // response when name null
+  // response when name null or undefined
   if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal memperbarui buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  }
+
+  // response when read page more than page count
+  if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
     });
     response.code(400);
     return response;
