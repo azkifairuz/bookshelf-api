@@ -5,7 +5,14 @@ const books = require('./books');
 // add book
 const addBookHandler = (request, h) => {
   const {
-    name, year, author, summary, publisher, pageCount, readPage, reading,
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    reading,
   } = request.payload;
 
   const id = nanoid(16);
@@ -107,7 +114,7 @@ const getAllBookHandler = () => {
 const getBookbyIdHandler = (request, h) => {
   const { bookId } = request.params;
 
-  const filteredBook = books.filter((book) => book.id === bookId)[0];
+  const filteredBook = books.find((book) => book.id === bookId)[0];
 
   if (filteredBook !== undefined) {
     return {
@@ -126,7 +133,30 @@ const getBookbyIdHandler = (request, h) => {
   return response;
 };
 
+const editBookHandler = (request, h) => {
+  const { bookId } = request.params;
 
+  const {
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    reading,
+  } = request.payload;
+  const updatedAt = new Date().toISOString();
+
+  const index = books.findIndex((note) => note.id === bookId);
+
+  const response = h.response({
+    status: 'success',
+    message: 'Buku berhasil diperbarui',
+  });
+  response.code(200);
+  return response;
+}
 module.exports = {
   addBookHandler,
   getAllBookHandler,
