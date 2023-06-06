@@ -30,7 +30,16 @@ const addBookHandler = (request, h) => {
 
   books.push(newBook);
 
+  if (name === null) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  }
   const isSuccess = books.filter((book) => book.id === id).length > 0;
+
 
   if (isSuccess) {
     const response = h.response({
@@ -43,8 +52,6 @@ const addBookHandler = (request, h) => {
     response.code(201);
     return response;
   }
-
-  
 };
 
 module.exports = {
