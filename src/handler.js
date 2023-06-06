@@ -3,7 +3,9 @@ const { nanoid } = require('nanoid');
 const books = require('./books');
 
 const addBookHandler = (request, h) => {
-  const {name, year, author, summary, publisher, pageCount, readPage, reading} = request.payload;
+  const {
+    name, year, author, summary, publisher, pageCount, readPage, reading,
+  } = request.payload;
 
   const id = nanoid(16);
 
@@ -31,7 +33,7 @@ const addBookHandler = (request, h) => {
   books.push(newBook);
 
   // response  when name = null
-  if (name === null) {
+  if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku',
@@ -60,10 +62,11 @@ const addBookHandler = (request, h) => {
     response.code(400);
     return response;
   }
+
   // response when all passed
   const response = h.response({
     status: 'success',
-    message: 'buku berhasil ditambahkan',
+    message: 'Buku berhasil ditambahkan',
     data: {
       bookId: id,
     },
