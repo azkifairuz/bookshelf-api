@@ -205,4 +205,5 @@ module.exports = {
   addBookHandler,
   getAllBookHandler,
   getBookbyIdHandler,
+  editBookHandler,
 };
