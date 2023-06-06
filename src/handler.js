@@ -2,6 +2,7 @@
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
+// add book
 const addBookHandler = (request, h) => {
   const {
     name, year, author, summary, publisher, pageCount, readPage, reading,
@@ -11,7 +12,7 @@ const addBookHandler = (request, h) => {
 
   const finished = pageCount === readPage;
 
-  const insertedAt = new Date().toISOString;
+  const insertedAt = new Date().toISOString();
 
   const updatedAt = insertedAt;
 
@@ -75,6 +76,7 @@ const addBookHandler = (request, h) => {
   return response;
 };
 
+// get all boook
 const getAllBookHandler = () => {
   const bookData = books.map((book) => ({
     id: book.id,
@@ -101,7 +103,32 @@ const getAllBookHandler = () => {
   return getAll;
 };
 
+// getBookByIdHandler for detail
+const getBookbyIdHandler = (request, h) => {
+  const { bookId } = request.params;
+
+  const filteredBook = books.filter((book) => book.id === bookId)[0];
+
+  if (filteredBook !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        book: filteredBook,
+      },
+    };
+  }
+
+  const response = h.response({
+    status: 'fail',
+    message: 'Buku tidak ditemukan',
+  });
+  response.code(404);
+  return response;
+};
+
+
 module.exports = {
   addBookHandler,
   getAllBookHandler,
+  getBookbyIdHandler,
 };
