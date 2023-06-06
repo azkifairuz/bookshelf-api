@@ -43,7 +43,7 @@ const addBookHandler = (request, h) => {
   }
 
   // response  when readPage more than pageCOunt
-  if (readPage >= pageCount) {
+  if (readPage > pageCount) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
@@ -74,6 +74,34 @@ const addBookHandler = (request, h) => {
   response.code(201);
   return response;
 };
+
+const getAllBookHandler = () => {
+  const bookData = books.map((book) => ({
+    id: book.id,
+    name: book.name,
+    publisher: book.publisher,
+  }));
+
+  if (books.length > 0) {
+    const getAll = {
+      status: 'success',
+      data: {
+        books: bookData,
+      },
+    };
+    return getAll;
+  }
+
+  const getAll = {
+    status: 'success',
+    data: {
+      books: [],
+    },
+  };
+  return getAll;
+};
+
 module.exports = {
   addBookHandler,
+  getAllBookHandler,
 };
