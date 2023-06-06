@@ -10,7 +10,7 @@
     "lint": "eslint ./"
   },
   "keywords": [],
-  "author": "",
+  "author": "azkifairuz",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.42.0",
