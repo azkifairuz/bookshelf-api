@@ -38,8 +38,6 @@ const addBookHandler = (request, h) => {
     updatedAt,
   };
 
-  books.push(newBook);
-
   // response  when name null and undefined
   if (!name) {
     const response = h.response({
@@ -59,6 +57,8 @@ const addBookHandler = (request, h) => {
     response.code(400);
     return response;
   }
+
+  books.push(newBook);
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
   // ressponse when id already exist
